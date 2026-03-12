@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Adsprint</title>
+    <meta name="description" content="Premium website design, SEO optimization, hospitality websites, and automation systems for modern businesses.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0B0F2F',
+                        secondary: '#4C1D95',
+                        accent: '#7C3AED',
+                    },
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0B0F2F;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .glass-nav {
+            background: rgba(11, 15, 47, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #7C3AED, #A78BFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .service-card {
+            background: rgba(76, 29, 149, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+        
+        .service-card:hover {
+            background: rgba(76, 29, 149, 0.2);
+            border-color: rgba(124, 58, 237, 0.6);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #7C3AED, #A78BFA);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.5);
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        .service-image {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(167, 139, 250, 0.3));
+            height: 250px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navigation -->
+    <nav class="glass-nav fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-2xl font-heading font-bold gradient-text">Adsprint</a>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-purple-400 transition font-medium">Home</a>
+                    <a href="services.html" class="text-purple-400 font-medium">Services</a>
+                    <a href="process.html" class="text-white hover:text-purple-400 transition font-medium">Process</a>
+                    <a href="contact.html" class="text-white hover:text-purple-400 transition font-medium">Contact</a>
+                </div>
+                
+                <button class="md:hidden text-white" id="mobile-toggle">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div class="mobile-menu fixed top-0 right-0 w-64 h-full bg-primary shadow-2xl md:hidden" id="mobile-menu">
+            <div class="p-6">
+                <button class="text-white mb-8" id="mobile-close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <div class="flex flex-col space-y-4">
+                    <a href="index.html" class="text-white hover:text-purple-400 transition text-lg">Home</a>
+                    <a href="services.html" class="text-purple-400 text-lg">Services</a>
+                    <a href="process.html" class="text-white hover:text-purple-400 transition text-lg">Process</a>
+                    <a href="contact.html" class="text-white hover:text-purple-400 transition text-lg">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="font-heading text-5xl md:text-7xl font-bold mb-6 gradient-text hero-title">Our Services</h1>
+            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto hero-subtitle">
+                Comprehensive digital solutions designed to transform your business and accelerate growth.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Website Design -->
+    <section class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center fade-in">
+                <div>
+                    <div class="service-image">🎨</div>
+                </div>
+                <div>
+                    <h2 class="font-heading text-4xl md:text-5xl font-bold mb-6 gradient-text">Website Design</h2>
+                    <p class="text-xl text-gray-300 mb-6">
+                        Premium websites designed for performance and conversions. We create stunning digital experiences 
+                        that captivate your audience and drive business results.
+                    </p>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Custom responsive design
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            High-performance optimization
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Conversion-focused layouts
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Modern tech stack
+                        </li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Hospitality Websites -->
+    <section class="py-20 px-6 bg-gradient-to-b from-primary to-secondary">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center fade-in">
+                <div class="order-2 md:order-1">
+                    <h2 class="font-heading text-4xl md:text-5xl font-bold mb-6 gradient-text">Hospitality Websites</h2>
+                    <p class="text-xl text-gray-300 mb-6">
+                        Luxury websites for villas, hotels, restaurants, and cafes. We create immersive digital experiences 
+                        that showcase your property and drive bookings.
+                    </p>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Stunning visual storytelling
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Integrated booking systems
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Virtual tours and galleries
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Multi-language support
+                        </li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">Get Started</a>
+                </div>
+                <div class="order-1 md:order-2">
+                    <div class="service-image">🏨</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SEO Optimization -->
+    <section class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center fade-in">
+                <div>
+                    <div class="service-image">🔍</div>
+                </div>
+                <div>
+                    <h2 class="font-heading text-4xl md:text-5xl font-bold mb-6 gradient-text">SEO Optimization</h2>
+                    <p class="text-xl text-gray-300 mb-6">
+                        Improve your search rankings and attract organic traffic. We implement proven SEO strategies 
+                        that increase visibility and drive qualified leads to your business.
+                    </p>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Technical SEO audits
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Keyword research and strategy
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            On-page optimization
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Performance tracking
+                        </li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Automation Systems -->
+    <section class="py-20 px-6 bg-gradient-to-b from-secondary to-primary">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center fade-in">
+                <div class="order-2 md:order-1">
+                    <h2 class="font-heading text-4xl md:text-5xl font-bold mb-6 gradient-text">Automation Systems</h2>
+                    <p class="text-xl text-gray-300 mb-6">
+                        Smart booking and inquiry systems that work 24/7. We automate your business processes 
+                        to save time and improve customer experience.
+                    </p>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Automated booking systems
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            CRM integration
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Email marketing automation
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Analytics and reporting
+                        </li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">Get Started</a>
+                </div>
+                <div class="order-1 md:order-2">
+                    <div class="service-image">⚡</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Digital Strategy -->
+    <section class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center fade-in">
+                <div>
+                    <div class="service-image">📊</div>
+                </div>
+                <div>
+                    <h2 class="font-heading text-4xl md:text-5xl font-bold mb-6 gradient-text">Digital Strategy</h2>
+                    <p class="text-xl text-gray-300 mb-6">
+                        Helping businesses grow their online presence. We develop comprehensive digital strategies 
+                        that align with your business goals and drive measurable results.
+                    </p>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Market research and analysis
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Competitive positioning
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Growth roadmap development
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-3">✓</span>
+                            Performance optimization
+                        </li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-24 px-6">
+        <div class="max-w-4xl mx-auto text-center fade-in">
+            <h2 class="font-heading text-4xl md:text-6xl font-bold mb-6 gradient-text">Ready to Get Started?</h2>
+            <p class="text-xl text-gray-300 mb-12">
+                Let's discuss how we can help transform your digital presence and drive growth.
+            </p>
+            <a href="contact.html" class="btn-primary text-lg px-12 py-4">Start Your Project</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-purple-900/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-heading text-2xl font-bold gradient-text mb-4">Adsprint</h3>
+                    <p class="text-gray-400">Strategic websites for modern businesses.</p>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="services.html" class="hover:text-purple-400 transition">Website Design</a></li>
+                        <li><a href="services.html" class="hover:text-purple-400 transition">SEO Optimization</a></li>
+                        <li><a href="services.html" class="hover:text-purple-400 transition">Automation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="index.html" class="hover:text-purple-400 transition">About</a></li>
+                        <li><a href="process.html" class="hover:text-purple-400 transition">Process</a></li>
+                        <li><a href="contact.html" class="hover:text-purple-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold mb-4">Connect</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-purple-400 transition">LinkedIn</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Twitter</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center text-gray-400 pt-8 border-t border-purple-900/30">
+                <p>&copy; 2025 Adsprint. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from('.hero-title', {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            delay: 0.3
+        });
+        
+        gsap.from('.hero-subtitle', {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            delay: 0.6
+        });
+        
+        gsap.utils.toArray('.fade-in').forEach(elem => {
+            gsap.from(elem, {
+                opacity: 0,
+                y: 80,
+                duration: 1.2,
+                scrollTrigger: {
+                    trigger: elem,
+                    start: 'top 80%',
+                    end: 'top 40%',
+                    scrub: 1
+                }
+            });
+        });
+        
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileClose = document.getElementById('mobile-close');
+        
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
