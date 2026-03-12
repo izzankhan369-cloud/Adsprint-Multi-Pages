@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Process - Adsprint</title>
+    <meta name="description" content="Discover our proven 5-step process for building strategic websites that drive business growth.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0B0F2F',
+                        secondary: '#4C1D95',
+                        accent: '#7C3AED',
+                    },
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0B0F2F;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .glass-nav {
+            background: rgba(11, 15, 47, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #7C3AED, #A78BFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .timeline-step {
+            background: rgba(76, 29, 149, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: #7C3AED;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.8);
+        }
+        
+        .timeline-step:hover {
+            background: rgba(76, 29, 149, 0.2);
+            border-color: rgba(124, 58, 237, 0.6);
+            transform: translateX(10px);
+        }
+        
+        .step-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: rgba(124, 58, 237, 0.3);
+            line-height: 1;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: -31px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #7C3AED, rgba(124, 58, 237, 0.1));
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #7C3AED, #A78BFA);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.5);
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navigation -->
+    <nav class="glass-nav fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-2xl font-heading font-bold gradient-text">Adsprint</a>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-purple-400 transition font-medium">Home</a>
+                    <a href="services.html" class="text-white hover:text-purple-400 transition font-medium">Services</a>
+                    <a href="process.html" class="text-purple-400 font-medium">Process</a>
+                    <a href="contact.html" class="text-white hover:text-purple-400 transition font-medium">Contact</a>
+                </div>
+                
+                <button class="md:hidden text-white" id="mobile-toggle">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div class="mobile-menu fixed top-0 right-0 w-64 h-full bg-primary shadow-2xl md:hidden" id="mobile-menu">
+            <div class="p-6">
+                <button class="text-white mb-8" id="mobile-close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <div class="flex flex-col space-y-4">
+                    <a href="index.html" class="text-white hover:text-purple-400 transition text-lg">Home</a>
+                    <a href="services.html" class="text-white hover:text-purple-400 transition text-lg">Services</a>
+                    <a href="process.html" class="text-purple-400 text-lg">Process</a>
+                    <a href="contact.html" class="text-white hover:text-purple-400 transition text-lg">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="font-heading text-5xl md:text-7xl font-bold mb-6 gradient-text hero-title">Our Process</h1>
+            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto hero-subtitle">
+                A proven 5-step methodology for building strategic websites that drive business growth.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Timeline -->
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto relative">
+            <div class="timeline-line hidden md:block"></div>
+            
+            <!-- Step 1: Discovery -->
+            <div class="timeline-step p-8 rounded-2xl mb-12 md:ml-16 step-card">
+                <div class="flex items-start gap-6">
+                    <div class="step-number">01</div>
+                    <div class="flex-1">
+                        <h3 class="font-heading text-3xl font-bold mb-4 gradient-text">Discovery</h3>
+                        <p class="text-xl text-gray-300 mb-4">
+                            We start by understanding your business goals, target audience, and competitive landscape.
+                        </p>
+                        <ul class="space-y-2 text-gray-400">
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Business objectives analysis
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Target audience research
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Competitor analysis
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Requirements gathering
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 2: Strategy -->
+            <div class="timeline-step p-8 rounded-2xl mb-12 md:ml-16 step-card">
+                <div class="flex items-start gap-6">
+                    <div class="step-number">02</div>
+                    <div class="flex-1">
+                        <h3 class="font-heading text-3xl font-bold mb-4 gradient-text">Strategy</h3>
+                        <p class="text-xl text-gray-300 mb-4">
+                            We develop a comprehensive digital strategy aligned with your business objectives.
+                        </p>
+                        <ul class="space-y-2 text-gray-400">
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Digital positioning strategy
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Content architecture
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                User experience planning
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Technology stack selection
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3: Design -->
+            <div class="timeline-step p-8 rounded-2xl mb-12 md:ml-16 step-card">
+                <div class="flex items-start gap-6">
+                    <div class="step-number">03</div>
+                    <div class="flex-1">
+                        <h3 class="font-heading text-3xl font-bold mb-4 gradient-text">Design</h3>
+                        <p class="text-xl text-gray-300 mb-4">
+                            Creating premium visual experiences that engage users and reflect your brand identity.
+                        </p>
+                        <ul class="space-y-2 text-gray-400">
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Wireframing and prototyping
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Visual design creation
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Brand integration
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Design system development
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 4: Development -->
+            <div class="timeline-step p-8 rounded-2xl mb-12 md:ml-16 step-card">
+                <div class="flex items-start gap-6">
+                    <div class="step-number">04</div>
+                    <div class="flex-1">
+                        <h3 class="font-heading text-3xl font-bold mb-4 gradient-text">Development</h3>
+                        <p class="text-xl text-gray-300 mb-4">
+                            Building fast, scalable, and secure websites using modern technologies.
+                        </p>
+                        <ul class="space-y-2 text-gray-400">
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Frontend development
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Backend integration
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Performance optimization
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Quality assurance testing
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 5: Launch -->
+            <div class="timeline-step p-8 rounded-2xl md:ml-16 step-card">
+                <div class="flex items-start gap-6">
+                    <div class="step-number">05</div>
+                    <div class="flex-1">
+                        <h3 class="font-heading text-3xl font-bold mb-4 gradient-text">Launch</h3>
+                        <p class="text-xl text-gray-300 mb-4">
+                            Deploying your website and continuously optimizing for maximum performance.
+                        </p>
+                        <ul class="space-y-2 text-gray-400">
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Deployment and hosting setup
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                SEO implementation
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Analytics configuration
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-purple-400 mr-3">→</span>
+                                Ongoing support and optimization
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Why Our Process Works -->
+    <section class="py-20 px-6 bg-gradient-to-b from-secondary to-primary">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold mb-6 gradient-text">Why Our Process Works</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Our methodology is designed to deliver exceptional results while maintaining transparency and collaboration.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center fade-card">
+                    <div class="text-6xl mb-4">🎯</div>
+                    <h3 class="font-heading text-2xl font-bold mb-3">Goal-Oriented</h3>
+                    <p class="text-gray-300">Every decision is aligned with your business objectives and growth targets.</p>
+                </div>
+                
+                <div class="text-center fade-card">
+                    <div class="text-6xl mb-4">🤝</div>
+                    <h3 class="font-heading text-2xl font-bold mb-3">Collaborative</h3>
+                    <p class="text-gray-300">We work closely with you throughout the entire process to ensure success.</p>
+                </div>
+                
+                <div class="text-center fade-card">
+                    <div class="text-6xl mb-4">📊</div>
+                    <h3 class="font-heading text-2xl font-bold mb-3">Data-Driven</h3>
+                    <p class="text-gray-300">Decisions backed by research, analytics, and proven best practices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-24 px-6">
+        <div class="max-w-4xl mx-auto text-center fade-in">
+            <h2 class="font-heading text-4xl md:text-6xl font-bold mb-6 gradient-text">Ready to Start Your Project?</h2>
+            <p class="text-xl text-gray-300 mb-12">
+                Let's discuss how our proven process can help transform your digital presence.
+            </p>
+            <a href="contact.html" class="btn-primary text-lg px-12 py-4">Get Started Today</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-purple-900/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-heading text-2xl font-bold gradient-text mb-4">Adsprint</h3>
+                    <p class="text-gray-400">Strategic websites for modern businesses.</p>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="services.html" class="hover:text-purple-400 transition">Website Design</a></li>
+                        <li><a href="services.html" class="hover:text-purple-400 transition">SEO Optimization</a></li>
+                        <li><a href="services.html" class="hover:text-purple-400 transition">Automation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="index.html" class="hover:text-purple-400 transition">About</a></li>
+                        <li><a href="process.html" class="hover:text-purple-400 transition">Process</a></li>
+                        <li><a href="contact.html" class="hover:text-purple-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold mb-4">Connect</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-purple-400 transition">LinkedIn</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Twitter</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center text-gray-400 pt-8 border-t border-purple-900/30">
+                <p>&copy; 2025 Adsprint. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from('.hero-title', {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            delay: 0.3
+        });
+        
+        gsap.from('.hero-subtitle', {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            delay: 0.6
+        });
+        
+        gsap.utils.toArray('.step-card').forEach((card, index) => {
+            gsap.from(card, {
+                opacity: 0,
+                x: -50,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    end: 'top 40%',
+                    scrub: 1
+                }
+            });
+        });
+        
+        gsap.utils.toArray('.fade-card').forEach((card, index) => {
+            gsap.from(card, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: index * 0.2,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%'
+                }
+            });
+        });
+        
+        gsap.utils.toArray('.fade-in').forEach(elem => {
+            gsap.from(elem, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: elem,
+                    start: 'top 80%'
+                }
+            });
+        });
+        
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileClose = document.getElementById('mobile-close');
+        
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
